@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Makerbot Status</title>
+        <meta name="description" content="Current status of a connected 3D printer via ReplicatorG">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+        <div class="header-container">
+            <header class="wrapper clearfix">
+                <h1 class="title">Makerbot Status</h1>
+            </header>
+        </div>
+
+        <div class="main-container">
+            <div class="main wrapper clearfix">
+
+                <article>
+                    <header>
+                        <h1 id="machine-type">Please wait, connecting...</h1>
+                        <h2>Status: <span id="state-machine"></span></h2>
+                    </header>
+                    <section>
+                    	<h2>Build Statistics</h2>                  	
+                    	<ul>
+                    		<li>
+                    			<span class="li-label">Percentage Complete</span>
+                    			<span class="li-data"><span id="build-percentagecomplete">0</span>%</span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Time Elapsed</span>
+                    			<span class="li-data" id="build-elapsed">0</span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Time Remaining</span>
+                    			<span class="li-data" id="build-remaining">0</span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Lines Complete</span>
+                    			<span class="li-data" id="build-completelines">0</span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Lines Total</span>
+                    			<span class="li-data" id="build-totallines">0</span>
+                    		</li>
+                    	</ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Tooling Temperatures</h2>
+                        
+                        <ul>
+                    		<li>
+                    			<span class="li-label" id="tools-t1">Tool 1</span>
+                    			<span class="li-data"><span id="tools-t1-temp">0</span>&deg;</span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label" id="tools-t2">Tool 2</span>
+                    			<span class="li-data"><span id="tools-t2-temp">0</span>&deg;</span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label" id="tools-t3">Tool 3</span>
+                    			<span class="li-data"><span id="tools-t3-temp">0</span>&deg;</span>
+                    		</li>
+                    	</ul>                       
+                    </section>
+                    <section>
+                        <h2>ReplicatorG Console Output</h2>
+                        <div>
+                    		<ul id="machine-console"></ul>
+                    	</div>
+                    </section>
+                    <section>
+                    	<h2>Web Socket Debug Info</h2>
+	                    <div>
+	                    	<ul id="server-console"></ul>
+	                    </div>
+                    </section>
+                </article>
+
+                <aside>
+                    <h3>General Info</h3>
+                        <ul>
+                    		<li>
+                    			<span class="li-label">Name</span>
+                    			<span class="li-data" id="machine-bot"></span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Organization</span>
+                    			<span class="li-data" id="machine-org"></span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Location</span>
+                    			<span class="li-data" id="machine-loc"></span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Driver</span>
+                    			<span class="li-data" id="machine-driver"></span>
+                    		</li>
+                    		<li>
+                    			<span class="li-label">Firmware</span>
+                    			<span class="li-data" id="machine-firmware"></span>
+                    		</li>
+                    	</ul>  
+                </aside>
+
+            </div> <!-- #main -->
+        </div> <!-- #main-container -->
+
+        <div class="footer-container">
+            <footer class="wrapper">
+                <h3>Repo: <a href="https://github.com/justinribeiro/ReplicatorG-webstatus">https://github.com/justinribeiro/ReplicatorG-webstatus</a></h3>
+            </footer>
+        </div>
+        
+        <script>
+        	window._gaq=[['_setAccount',''],['_trackPageview'],['_trackPageLoadTime']];
+        	
+			// If we have websockets and json, we're in business
+			Modernizr.load([
+			  {
+			    test : Modernizr.websockets && window.JSON,
+			    nope : 'modules/functional-polyfills.js',			    
+			    both : ['js/plugins.js','js/main.js'],
+			    complete : function () {
+			    	replicatorg.site.init();
+			    }
+			  },
+			  {
+				  load:('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js'
+			  }
+			]);        
+        </script>
+        <!-- scripts concatenated and minified via ant build script-->
+        <script src="js/main.js"></script>
+        <script src="js/plugins.js"></script>
+        <!-- end scripts-->
+    </body>
+</html>

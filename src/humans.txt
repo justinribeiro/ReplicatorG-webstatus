@@ -1,0 +1,28 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+#######################################
+# TEAM PLAYERS MAKE THE WORLD AWESOME #
+#######################################
+
+    Justin Ribeiro 	-- Crazed Engineer with a code editor, 3D printer, and not enough sense -- @justinribeiro
+    Monica Ribeiro 	-- Kind wife who puts up with guy above
+    David Steele 	-- The guy doing most of the printing, testing my crazy ReplicatorG builds
+    James Duvall	-- "The machine is not supposed to make that sound right? @#$%^&"
+
+#########################################################################
+# THANK YOU TO THE TEAMS THAT BUILD GREAT LIBS, PLATFORMS, AND HARDWARE #
+#########################################################################
+
+    HTML5 Boilerplate, Iynitializr, and YepNope
+    MQTT and Eclipse Paho
+    Mosquitto
+    Makerbot Industries
+
+#######################
+# TECHNOLOGY COLOPHON #
+#######################
+
+    HTML5, CSS3
+    Modernizr,    
+    WebSocket API
