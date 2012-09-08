@@ -1,6 +1,7 @@
 function Mqtt(dest){
     this.url = dest;
     this.ui = new Ui();
+    this.interval = null;
 }
 
 Mqtt.prototype = {
@@ -8,12 +9,15 @@ Mqtt.prototype = {
     connect: function(){
     	var self = this;
     	
-    	// Fallback
+    	// Fallback in case client doesn't have web socket
     	if (!Modernizr.websockets) {
     		WEB_SOCKET_SWF_LOCATION = "/swf/WebSocketMain.swf";
     	}
     	
         this.ws = new WebSocket(this.url);
+        
+        // heartbeat to keep web socket alive
+        this.interval = setInterval(function() { this.ws.send('heartbeat'); }, 60000);
         
         this.ws.onopen = function(event){
         	self.onOpen(event);
@@ -33,16 +37,25 @@ Mqtt.prototype = {
     },
     
     close: function() {
+    	
+    	// stop the heartbeat
+    	clearInterval(this.interval);
+    	
+    	// close the socket
     	this.ws.disconnect();
+    	
+    	// write to log
+    	this.ui.domUpdateConsole({"message": "Web socket connection closed."});
     },
 
     onOpen: function(event)   {
         console.log(event);
         this.publish("topic", "info", 2);
+        this.publish("topic", "state", 2);
     },
     
     onClose: function(event)   {
-        console.log(event); 
+        this.ui.domUpdateConsole({"message": "Web socket connection lost."});
     },
     
     onMessage: function(event) {
@@ -178,7 +191,14 @@ replicatorg.site = {
 
 		var broker = new Mqtt(replicatorg.config.webSocketUrl);
 		broker.connect();
+		
+		window.onbeforeunload = replicatorg.site.exit(broker);
 
+	},
+	exit: function(broker) {
+
+		// close the socket
+		broker.close();
 	}
 };
 
